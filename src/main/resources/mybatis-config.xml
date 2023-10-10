@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+  <typeAliases> <!-- 이 파일의 역할은 빈 클래스 객체 별칭이름을 관리 -->      
+     
+     <typeAlias type="net.daum.vo.BbsVO" alias="bbs" />
+     <!-- BbsVO 빈클래스 객체 별칭이름을 bbs로 지정 -->   
+     <typeAlias type="net.daum.vo.PageVO" alias="page" />
+     <typeAlias type="net.daum.vo.AdminVO" alias="admin" />  
+     <typeAlias type="net.daum.vo.MemberVO" alias="member" />
+     <typeAlias type="net.daum.vo.MemberVO" alias="zipcode" />
+  </typeAliases>
+</configuration>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="Member"> <!-- 매퍼 네임스페이스명을 Member 으로 지정 -->
+	
+	<!-- 아이디 중복검색 -->
+	<select id="m_idcheck" resultType="member">
+	  select * from member where mem_id=#{id}
+	</select>
+	
+	<!--  우편주소 검색 -->
+	<select id="m_zip" resultType="net.daum.vo.ZipcodeVO">
+	  select * from zipcode where gil like #{dong}
+	</select>
+	
+	<!-- 회원저장 -->
+  <insert id="m_in">
+    insert into member (mem_id,mem_pwd,mem_name,mem_zip,mem_zip2,mem_addr,mem_addr2,
+    mem_phone01,mem_phone02,mem_phone03,mail_id,mail_domain,mem_state,mem_date)
+    values(#{mem_id},#{mem_pwd},#{mem_name},#{mem_zip},#{mem_zip2},#{mem_addr},
+    #{mem_addr2},#{mem_phone01},#{mem_phone02},#{mem_phone03},#{mail_id},
+    #{mail_domain},1,sysdate)
+  </insert>
+</mapper>
+
+
+
+
+
+
