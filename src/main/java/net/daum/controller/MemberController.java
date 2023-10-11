@@ -210,6 +210,72 @@ public class MemberController {//사용자 회원관리
 		
 		return null;
 	}//member_logout()
+	
+	//회원 정보수정
+	@GetMapping("/member_edit")
+	public ModelAndView member_edit(HttpServletResponse response,HttpSession session)
+	throws Exception{
+		response.setContentType("text/html;charset=UTF-8");
+		String id = (String)session.getAttribute("id");//세션 아이디를 구함
+		
+		if(isLogin(session,response)) {//==true가 생략됨
+			String[] phone= {"010","011","019"};
+			String[] email = {"gmail.com","naver.com","daum.net","nate.com","직접입력"};
+			MemberVO em = this.memberService.getMember(id);//아이디에 해당하는 회원정보를 읽어옴
+			/* 문제) 아이디를 기준으로 member테이블로 부터 회원정보를 검색한다. member.xml에서 설정할
+			 * 유일 아이디명은 member_Info로 한다. 개발자 테스트인 단위테스트 까지 해보자.
+			 */
+			ModelAndView m = new ModelAndView("member/member_Edit");
+			m.addObject("em", em);
+			m.addObject("phone", phone);
+			m.addObject("email", email);
+			return m;
+		}
+		return null;
+	}//member_edit()
+	
+	//정보수정 완료
+	@RequestMapping("/member_update_ok")
+	public ModelAndView member_update_ok(MemberVO m,HttpServletResponse response,
+			HttpSession session) throws Exception{
+		response.setContentType("text/html;charset=UTF-8");
+		PrintWriter out=response.getWriter();
+		
+		String id=(String)session.getAttribute("id");
+		
+		if(isLogin(session, response)) {
+			m.setMem_id(id);
+			m.setMem_pwd(PwdChange.getPassWordToXEMD5String(m.getMem_pwd()));//정식 비번
+			//암호화
+			
+			this.memberService.updateMember(m);// 회원정보 수정
+			
+			out.println("<script>");
+			out.println("alert('정보 수정했습니다!');");
+			out.println("location='member_edit';");
+			out.println("</script>");
+		}
+		return null;
+	}//member_update_ok()
+	
+	//반복적인 코드 줄이기
+	public static boolean isLogin(HttpSession session,HttpServletResponse response)
+	throws Exception{
+		PrintWriter out = response.getWriter();
+		String id=(String)session.getAttribute("id");
+		
+		if(id == null) {
+			out.println("<script>");
+			out.println("alert('다시 로그인 하세요!');");
+			out.println("location='member_login';");
+			out.println("</script>");
+			
+			return false;
+		}
+		return true;
+	}//isLogin()
+	
+	
 }
 
 

@@ -19,4 +19,8 @@ public interface MemberDAO {
 
 	MemberVO loginCheck(String login_id);
 
+	MemberVO getMember(String id);
+
+	void updateMember(MemberVO m);
+
 }

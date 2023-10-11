@@ -35,10 +35,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    update member set mem_pwd=#{mem_pwd} where mem_id=#{mem_id}
   </update>
   
-  <!-- 로그인 인증처리 -->
+  <!-- 가입 회원 1인 경우만 로그인 인증 처리 mem_id 말고 login_id로 해도됨-->
   <select id="m_loginCheck" resultType="member">
    select * from member where mem_id=#{mem_id} and mem_state=1
   </select>
+  
+  <!-- 회원 정보 보기 -->
+  <select id="member_Info" resultType="net.daum.vo.MemberVO">
+   select * from member where mem_id=#{id}
+  </select>
+  
+  <!-- 정보수정 완료 -->
+  <update id="medit_ok">
+   update member set mem_pwd=#{mem_pwd}, mem_name=#{mem_name}, mem_zip=#{mem_zip},
+   mem_zip2=#{mem_zip2}, mem_addr=#{mem_addr}, mem_addr2=#{mem_addr2},
+   mem_phone01=#{mem_phone01}, mem_phone02=#{mem_phone02}, mem_phone03=#{mem_phone03},
+   mail_id=#{mail_id}, mail_domain=#{mail_domain} where mem_id=#{mem_id}
+  </update>
 </mapper>
 
 

@@ -83,7 +83,37 @@ public class MemberDAOImpl implements MemberDAO {
 	@Override
 	public MemberVO loginCheck(String login_id) {
 		
-		return this.sqlSession.selectOne("m_loginCheck", login_id);
-	}
+		//return this.sqlSession.selectOne("m_loginCheck", login_id);
+		
+		System.out.println(" \n==========================> 아이디와 mem_state=1 인 경우만 로그인 인증처리(JPA) ");
+		MemberVO m = this.memberRepo.loginCheck(login_id);
+		return m;
+	}//로그인 인증처리
+
+	@Override
+	public MemberVO getMember(String id) {
+		
+		//return this.sqlSession.selectOne("member_Info", id);
+		
+		System.out.println(" \n =====================> 아이디에 대한 회원정보 보기(회원수정폼에 활용)"
+				+": 이 경우는 반드시 로그인 된 상태에서 하기 때문에 null이 반환될 일이 없다. 내장메서드"
+				+" getReferenceById()를 사용");
+		
+		MemberVO em=this.memberRepo.getReferenceById(id);
+		return em;
+	}//회원정보 보기=>정보수정폼
+	
+	@Transactional
+	@Override
+	public void updateMember(MemberVO m) {
+		
+		//this.sqlSession.update("medit_ok",m);
+		
+		System.out.println(" \n =================> 회원정보 수정완료(JPA)");
+		this.memberRepo.updateMember(m.getMem_pwd(), m.getMem_name(), m.getMem_zip(),
+				m.getMem_zip2(), m.getMem_addr(), m.getMem_addr2(), m.getMem_phone01(),
+				m.getMem_phone02(), m.getMem_phone03(), m.getMail_id(), m.getMail_domain(),
+				m.getMem_id());
+	}//회원정보 수정완료
 	
 }
