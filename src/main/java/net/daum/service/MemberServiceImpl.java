@@ -32,6 +32,24 @@ public class MemberServiceImpl implements MemberService {
 		
 		this.memberDao.insertMember(m);
 	}
+
+	@Override
+	public MemberVO pwdMember(MemberVO m) {
+		
+		return this.memberDao.pwdMember(m);
+	}
+
+	@Override
+	public void updatePwd(MemberVO m) {
+		this.memberDao.updatePwd(m);
+		
+	}
+
+	@Override
+	public MemberVO loginCheck(String login_id) {
+		
+		return this.memberDao.loginCheck(login_id);
+	}
 	
 	
 }

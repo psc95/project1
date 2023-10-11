@@ -24,6 +24,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     #{mem_addr2},#{mem_phone01},#{mem_phone02},#{mem_phone03},#{mail_id},
     #{mail_domain},1,sysdate)
   </insert>
+  
+  <!-- 비번찾기 : 아이디와 회원이름을 기준으로 회원정보 검색 -->
+  <select id="p_find" resultType="member">
+   select * from member where mem_id=#{mem_id} and mem_name=#{mem_name}
+  </select>
+  
+  <!-- 암호화 된 임시비번으로 수정 -->
+  <update id="p_edit">
+   update member set mem_pwd=#{mem_pwd} where mem_id=#{mem_id}
+  </update>
+  
+  <!-- 로그인 인증처리 -->
+  <select id="m_loginCheck" resultType="member">
+   select * from member where mem_id=#{mem_id} and mem_state=1
+  </select>
 </mapper>
 
 
