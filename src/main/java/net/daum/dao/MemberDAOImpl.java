@@ -1,5 +1,6 @@
 package net.daum.dao;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -115,5 +116,27 @@ public class MemberDAOImpl implements MemberDAO {
 				m.getMem_phone02(), m.getMem_phone03(), m.getMail_id(), m.getMail_domain(),
 				m.getMem_id());
 	}//회원정보 수정완료
+
+	@Override
+	public void delMem(MemberVO dm) {
+		//this.sqlSession.update("mDel_ok", dm);
+		
+		System.out.println(" \n ==============>회원 탈퇴 (JPA)");
+		Optional<MemberVO> mResult = this.memberRepo.findById(dm.getMem_id());
+		/* java 8에서 추가된 Optional을 사용하는 이유는 null 처리를 해결하기 위한 Wrapper클래스이다. 
+		 * null이면 NullPointerException 예외처리를 하기 위해서 try~catch문등을 사용해야 한다. 이런
+		 * 부분을 해결해 준다.
+		 * */
+		MemberVO member;
+		if(mResult.isPresent()) {//아이디에 해당하는 회원정보가 있다면 참
+			member = mResult.get();//MemberVO 엔티티 타입 객체를 구함
+			
+			member.setMem_delcont(dm.getMem_delcont());//탈퇴사유 저장
+			member.setMem_state(2);//탈퇴회원 구분값 2 저장
+			member.setMem_deldate(new Timestamp(System.currentTimeMillis()));//탈퇴 날짜
+			
+			this.memberRepo.save(member);
+		}
+	}//회원 탈퇴
 	
 }

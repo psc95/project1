@@ -62,6 +62,11 @@ public class MemberServiceImpl implements MemberService {
 		this.memberDao.updateMember(m);
 		
 	}
+
+	@Override
+	public void delMem(MemberVO dm) {
+		this.memberDao.delMem(dm);
+	}
 	
 	
 }

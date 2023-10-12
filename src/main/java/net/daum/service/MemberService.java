@@ -23,4 +23,6 @@ public interface MemberService {
 
 	void updateMember(MemberVO m);
 
+	void delMem(MemberVO dm);
+
 }

@@ -258,6 +258,58 @@ public class MemberController {//사용자 회원관리
 		return null;
 	}//member_update_ok()
 	
+	//회원탈퇴 폼
+	@RequestMapping("/member_del")
+	public ModelAndView member_del(HttpServletResponse response,HttpSession session)
+	throws Exception{
+		response.setContentType("text/html;charset=UTF-8");
+		PrintWriter out=response.getWriter();
+		String id=(String)session.getAttribute("id");//세션 아이디를 구함.
+		
+		if(isLogin(session, response)) {
+			MemberVO dm = this.memberService.getMember(id);
+			
+			ModelAndView m = new ModelAndView("member/member_Del");
+			m.addObject("dm", dm);
+			return m;
+		}
+		return null;
+	}//member_del()
+	
+	//회원탈퇴 완료
+	@RequestMapping("/member_del_ok")
+	public ModelAndView member_del_ok(HttpServletResponse response, HttpSession session,
+			String del_pwd,String del_cont) throws Exception{
+		response.setContentType("text/html;charset=UTF-8");
+		PrintWriter out=response.getWriter();
+		String id=(String)session.getAttribute("id");
+		
+		if(isLogin(session, response)) {
+			del_pwd = PwdChange.getPassWordToXEMD5String(del_pwd);//비번 암호화
+			MemberVO db_pwd = this.memberService.getMember(id);
+			
+			if(!db_pwd.getMem_pwd().contentEquals(del_pwd)) {
+				out.println("<script>");
+				out.println("alert('비번이 다릅니다!');");
+				out.println("history.back()");
+				out.println("</script>");
+			}else {
+				MemberVO dm = new MemberVO();
+				dm.setMem_id(id); dm.setMem_delcont(del_cont);
+				
+				this.memberService.delMem(dm);//회원탈퇴
+				
+				session.invalidate();//세션만료 => 로그아웃 처리
+				
+				out.println("<script>");
+				out.println("alert('회원 탈퇴 되었습니다!');");
+				out.println("location='member_login';");
+				out.println("</script>");
+			}
+		}
+		return null;
+	}//member_del_ok()
+	
 	//반복적인 코드 줄이기
 	public static boolean isLogin(HttpSession session,HttpServletResponse response)
 	throws Exception{
