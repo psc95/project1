@@ -1,0 +1,15 @@
+set serveroutput on 
+-- 오라클 내장 프로시저로 출력하는 내용을 화면에 보여주도록 하는 환경변수
+declare
+  vempno number(10); --vempno 변수 선언
+  vename varchar2(100);
+  
+begin
+  vempno := 101;       -- :=은 대입(할당) 연산자, 101번 사원번호 저장
+  vename := '홍길동';  /* 홍길동 사원 저장 */
+  
+  DBMS_OUTPUT.PUT_LINE('사원번호   /    사원이름'); /* DBMS_OUTPUT은 오라클 내장 패키지, PUT_LINE은 내장 프로시저를 출력해준다 */
+  DBMS_OUTPUT.PUT_LINE('=============================================>');
+  DBMS_OUTPUT.PUT_LINE(vempno || '  /  ' || vename);    -- ||기호는 문자열 연결 연산
+end;
+/

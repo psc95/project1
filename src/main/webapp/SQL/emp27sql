@@ -1,0 +1,19 @@
+ drop table emp27;
+ 
+ --emp27테이블 생성
+ create table emp27(
+  empno number(38) primary key --사원번호
+  ,ename varchar2(50) --사원명
+  ,sal int --급여
+  ,LOC varchar2(50) --사는 지역
+  ,deptno int --부서 번호
+  ,comm int --보너스
+  );
+  
+  insert into emp27 values(101,'강감찬',1000,'서울시 마포구',10,100);
+  insert into emp27 values(102,'이순신',1500,'서울시 강남구',20,null);
+  
+  commit;
+  
+  select * from emp27 order by empno asc;
+  

@@ -1,0 +1,12 @@
+set serveroutput on
+declare
+  vempno emp27.empno%type;
+  vename emp27.ename%type;
+begin
+  select empno,ename into vempno,vename from emp27 where ename='강감찬';
+  
+  DBMS_OUTPUT.PUT_LINE('사원번호 / 사원이름');
+  DBMS_OUTPUT.PUT_LINE('=========================>');
+  DBMS_OUTPUT.PUT_LINE(vempno || ' / ' || vename);
+end;
+/
